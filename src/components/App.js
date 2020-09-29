@@ -1,7 +1,27 @@
-import React from 'react';
+import React, { useReducer, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+import reducer from '../reducers'
+
 const App = () => {
+
+  const [state, dispatch] = useReducer(reducer, [])
+  const [title, setTitle] = useState('')
+  const [body, setBody] =useState('')
+
+  const addEvent = e => {
+    //reloadを防止している。このeはeventである。
+    e.preventDefault()
+    dispatch({
+      type: 'CREATE_EVENT',
+      title,
+      body
+    })
+    console.log(state);
+    setTitle('')
+    setBody('')
+  }
+
   return (
     <div className="container-fluid">
       <h4>イベント作成フォーム</h4>
@@ -9,15 +29,15 @@ const App = () => {
         <div className="form-group">
           <label htmlFor="formEventTitle">タイトル</label>
           {/* htmlForとidの値が同じであれば、ラベルをタップした時に、フォーカスされる。 */}
-          <input className="form-control" id="formEventTitle" />
+          <input className="form-control" id="formEventTitle" value={title} onChange={e => setTitle(e.target.value)}/>
         </div>
 
         <div className="form-group">
           <label htmlFor="formEventTitle">ボディー</label>
-          <textarea className="form-control" id="formEventTitle" />
+          <textarea className="form-control" id="formEventTitle" value={body} onChange={e => setBody(e.target.value)}/>
         </div>
         
-        <button className="btn btn-primary">イベントの作成する</button>
+        <button className="btn btn-primary" onClick={addEvent}>イベントの作成する</button>
         <button className="btn btn-danger">全てのイベントを削除する</button>
       </form>
 
