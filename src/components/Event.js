@@ -18,6 +18,8 @@ const Event = ({ dispatch, event }) => {
 }
 
 export default Event
+
+
 // {
 //     // mapで同じ処理を回している。そうすると同じtrがなんども生成出力されるので、一個一個を識別できない。よって識別するためのkeyをつける必要がある。
 //     // mapの仕様で決まっているindexを第二引数として受け取りそれを、keyとして利用する。
