@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import {CREATE_EVENT, DELETE_ALL_EVENTS } from '../actions/index.js'
 
 //App.jsからpropsとして渡ってきたstate,dispatchを受け取り利用する。
 //ブラケットや丸括弧の理由を考えろ、なぜ、カーリーなのか、なぜカーリーであれば動くのか
@@ -10,7 +11,7 @@ const EventForm = ({state, dispatch}) => {
         //reloadを防止している。このeはeventである。
         e.preventDefault()
         dispatch({
-        type: 'CREATE_EVENT',
+        type: CREATE_EVENT,
         title,
         body
         })
@@ -20,7 +21,7 @@ const EventForm = ({state, dispatch}) => {
 
     const deleteAllEvents = e => {
         const result = window.confirm('全てのイベントを本当に削除しても良いですか？')
-        if (result){ dispatch({ type: 'DELETE_ALL_EVENTS' }) }
+        if (result){ dispatch({ type: DELETE_ALL_EVENTS }) }
         e.preventDefault() 
     }
 
