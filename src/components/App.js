@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import reducer from '../reducers';
 import Events from '../components/Events.js';
 import EventForm from '../components/EventForm.js'
+import OperationLogs from './OperationLogs.js'
 import AppContext from '../contexts/AppContext'
 
 const App = () => {
@@ -16,6 +17,7 @@ const App = () => {
         {/* EventFormにstateとdispatchを渡す。 */}
         <EventForm />
         <Events />
+        <OperationLogs/>
       </div>
     </AppContext.Provider>
   );
