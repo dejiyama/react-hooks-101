@@ -1,6 +1,9 @@
 import React, { useState, useContext } from 'react';
-import {CREATE_EVENT, DELETE_ALL_EVENTS } from '../actions/index.js'
+import {CREATE_EVENT, DELETE_ALL_EVENTS, DELETE_ALL_OPERATION_LOGS, ADD_OPERATION_LOGS } from '../actions/index.js'
 import AppContext from '../contexts/AppContext'
+
+import { timeCurrentIso8601 } from '../utils'
+
 //App.jsからpropsとして渡ってきたstate,dispatchを受け取り利用する。
 //ブラケットや丸括弧の理由を考えろ、なぜ、カーリーなのか、なぜカーリーであれば動くのか
 const EventForm = () => {
@@ -12,18 +15,33 @@ const EventForm = () => {
         //reloadを防止している。このeはeventである。
         e.preventDefault()
         dispatch({
-        type: CREATE_EVENT,
-        title,
-        body
+            type: CREATE_EVENT,
+            title,
+            body
         })
+
+        dispatch({
+            type: ADD_OPERATION_LOGS,
+            description: 'イベントを作成しました。',
+            operatedAt: timeCurrentIso8601()
+        })
+
         setTitle('')
         setBody('')
     }
 
     const deleteAllEvents = e => {
+        e.preventDefault()
         const result = window.confirm('全てのイベントを本当に削除しても良いですか？')
-        if (result){ dispatch({ type: DELETE_ALL_EVENTS }) }
-        e.preventDefault() 
+        if (result){ 
+            dispatch({ type: DELETE_ALL_EVENTS })
+
+            dispatch({
+                type: ADD_OPERATION_LOGS,
+                description: '全てのイベントを削除しました。',
+                operatedAt: timeCurrentIso8601()
+            })
+        }
     }
 
     //非活性化の判定 apiの二重送信防止とかにも使える
