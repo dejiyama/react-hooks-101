@@ -46,6 +46,15 @@ const EventForm = () => {
 
     //非活性化の判定 apiの二重送信防止とかにも使える
     const unCreatable = title ==='' || body === ""
+    const deleteAllOperationLogs = e => {
+        e.preventDefault()
+        const result = window.confirm('全ての操作ログを本当に削除しても良いですか？')
+        if(result) {
+            dispatch ({
+                type: DELETE_ALL_OPERATION_LOGS
+            })
+        }
+    }
 
     return (
         <>
@@ -65,6 +74,7 @@ const EventForm = () => {
                 <button className="btn btn-primary" onClick={addEvent} disabled={unCreatable}>イベントの作成する</button>
                 {/* ここの動き重要 */}
                 <button className="btn btn-danger" onClick={deleteAllEvents} disabled={state.events.length === 0}>全てのイベントを削除する</button>
+                <button className="btn btn-danger" onClick={deleteAllOperationLogs} disabled={state.operationLogs.length === 0}>全ての操作ログを削除する</button>
             </form>
         </>
     )
